@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+
+    <title>Python Online</title>
+
+    <script type="text/javascript">
+      var hide = (thing) => {thing.style.setProperty('display','none')}
+      var show = (thing) => {thing.style.setProperty('display','initial')}
+
+      window.addEventListener("load", () =>{
+
+        var submitCodeWindow = document.getElementById("window1");
+        var renderCodeWindow = document.getElementById("window2");
+        var button = document.getElementById("submit-button");
+        var codeString = document.getElementById("code-string");
+
+        renderCodeWindow.style.setProperty('display','none')
+        codeString.value = "";
+
+
+        button.addEventListener("click", () => {
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "http://localhost:3000/code", true);
+          xhr.setRequestHeader('Content-type','text/plain');
+          xhr.onreadystatechange = (res) => {
+            console.log(xhr.responseText);
+            hide(submitCodeWindow);
+            show(renderCodeWindow);
+          }
+
+          xhr.send(codeString.value);
+        })
+      })
+    </script>
+
+  </head>
+  <body>
+    <div id="window1">
+      <h1>
+        Send Me ur Code
+      </h1>
+      <textarea name="name" id = "code-string">
+      </textarea>
+      <div id = "submit-button">
+        Submit
+      </div>
+    </div>
+
+    <div id="window2">
+      <svg viewBox = "0 0 100 100"></svg>
+    </div>
+  </body>
+
+  <style type="text/css">
+    #submit-button{
+      background: #f59842;
+      border-radius: 50px;
+      float: left; padding: 20px;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #submit-button:hover{
+      box-shadow: 0 0 3px 3px #f59842;
+    }
+
+    svg{
+      background: grey;
+    }
+
+    body{
+      font-family: Roboto;
+      font-weight: 600;
+      margin: 50px;
+    }
+
+    #code-string{
+      width: 100%;
+      min-height: 500px;
+    }
+
+  </style>
+
+</html>
